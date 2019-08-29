@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:flutter/material.dart';
 import 'package:bus_news/model/BusNews.dart';
@@ -16,7 +17,6 @@ Future<List<BusNews>> getData() async {
     var rest = data as List;
     list = rest.map<BusNews>((json) => BusNews.fromJson(json)).toList();
   }
-  print("List Size: ${list.length}");
   return list;
 }
 
@@ -29,11 +29,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Boletim do transporte',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.red,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Boletim do transporte'),
     );
   }
 }
@@ -47,12 +47,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  openURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   @override
@@ -68,36 +69,85 @@ class _MyHomePageState extends State<MyHomePage> {
                 ? listViewWidget(snapshot.data)
                 : Center(child: CircularProgressIndicator());
           }),
-
     );
   }
 
-  Widget listViewWidget(List<BusNews> article) {
+  Widget listViewWidget(List<BusNews> news) {
     return Container(
       child: ListView.builder(
           itemCount: list.length,
-          padding: const EdgeInsets.all(2.0),
+          padding: const EdgeInsets.all(16.0),
           itemBuilder: (context, position) {
-            return Card(
-              child: ListTile(
-                title: Text(
-                  '${article[position].title}',
-                  style: TextStyle(
-                      fontSize: 18.0,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold),
-                ),
-                leading: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SizedBox(
-                    child: article[position].imageURL == null
-                        ? Image()
-                        : Image.network('${article[position].imageURL}'),
-                  ),
-                ),
-              ),
+            return Center(
+                child: Card(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      ListTile(
+                        leading: Icon(Icons.directions_bus),
+                        title: Text(
+                          '${news[position].date.substring(0, 10)}'
+                              '\n ${news[position].title}',
+                        ),
+                        subtitle: Text(
+                            '${news[position].content.substring(0, 80)} [...]'
+                        ),
+                      ),
+                      ButtonTheme.bar( // make buttons use the appropriate styles for cards
+                        child: ButtonBar(
+                          children: <Widget>[
+                            FlatButton(
+                              child: const Text('Clique aqui'),
+                              onPressed: () {
+                                openURL(news[position].link);
+                              },
+                            ),
+                            FlatButton(
+                              child: const Text('Ver Detalhes'),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => NewsDetails(busNews: news[position])),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )
+                )
             );
           }),
+    );
+  }
+}
+
+class NewsDetails extends StatelessWidget{
+
+  final BusNews busNews;
+
+  NewsDetails({Key key, @required this.busNews}):super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+      return Scaffold(appBar: AppBar(
+        title: Text('${busNews.title}'),
+      ),
+          body: SafeArea(
+            child: Column(
+              children: <Widget>[
+                SizedBox(
+                  child: busNews.imageURL == null
+                      ? Image(image: null)
+                      : Image.network(busNews.imageURL)
+                ),
+                Container(
+                  child: Text('${busNews.content}'),
+                )
+              ],
+            ),
+          )
     );
   }
 }
