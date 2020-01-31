@@ -2,8 +2,6 @@
 
 ![overview_menor](https://media.giphy.com/media/jpsxBpOnM0u0HFlbFN/giphy.gif)
 
-![overview_menor](https://user-images.githubusercontent.com/13802848/59546363-53ca8a80-8f02-11e9-9c00-36df16206bad.gif)
-
 ## Getting Started
 
 This project is a starting point for a Flutter application.
