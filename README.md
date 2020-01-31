@@ -1,6 +1,6 @@
 # bus_news
 
-![overview_menor](https://media.giphy.com/media/jpsxBpOnM0u0HFlbFN/giphy.gif)
+![](https://media.giphy.com/media/jpsxBpOnM0u0HFlbFN/giphy.gif)
 
 ## Getting Started
 
