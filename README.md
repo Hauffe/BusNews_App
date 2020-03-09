@@ -1,6 +1,9 @@
 # bus_news
 
-![Alt Text](https://media.giphy.com/media/KDyz8rp73HS9Y0f5PF/giphy.gif)
+Here is a brief of what was done, hope you enjoy it:
+https://media.giphy.com/media/KDyz8rp73HS9Y0f5PF/giphy.gif
+
+For this work properly, you should deploy the Bus News backapp into some cloud like amazon beanstalk and point the endpoint into the app.
 
 ## Getting Started
 
