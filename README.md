@@ -1,6 +1,6 @@
 # bus_news
 
-![Alt Text](https://media.giphy.com/media/KDyz8rp73HS9Y0f5PF/source.gif)
+![Alt Text](https://gph.is/g/4oLyx0J)
 
 ## Getting Started
 
