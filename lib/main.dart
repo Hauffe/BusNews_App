@@ -3,25 +3,26 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:flutter/material.dart';
 import 'package:bus_news/model/BusNews.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 List<BusNews> list;
 void main() => runApp(MyApp());
 
 Future<List<BusNews>> getData() async {
   String link =
-      "http://busnewsservice-env.us-east-2.elasticbeanstalk.com/bus_news";
-  var res = await http.get(link);
+      'https://use o comando ipconfig e pegue o endereço ipv4/bus_news';
+  var res = await get(Uri.parse(link));
   if (res.statusCode == 200) {
     var data = json.decode(res.body);
     var rest = data as List;
     list = rest.map<BusNews>((json) => BusNews.fromJson(json)).toList();
+  }else{
+    throw Exception("API error");
   }
   return list;
 }
 
 class MyApp extends StatelessWidget {
-
   final Future<BusNews> busNews;
 
   MyApp({Key key, this.busNews}) : super(key: key);
