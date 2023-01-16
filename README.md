@@ -1,6 +1,9 @@
 # bus_news
 
-A new Flutter application.
+Here is a brief of what was done, hope you enjoy it:
+[APP](https://giphy.com/gifs/KDyz8rp73HS9Y0f5PF/fullscreen)
+
+In order for this to work properly, you should deploy the [BusNews](https://github.com/Hauffe/BusNews) backapp into some cloud like amazon beanstalk and point the endpoint into the app.
 
 ## Getting Started
 
